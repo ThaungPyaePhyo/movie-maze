@@ -8,26 +8,33 @@ import { faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 function App() {
 
   const [movieData, setMovieData] = useState(null);
+  const [isMovieSelected, setIsMovieSelected] = useState(false);
+
+  const getFetchData = async (imdbID) => {
+    try {
+      const response = await axios.get('http://www.omdbapi.com/', {
+        params: {
+          i: imdbID,
+          apikey: '7e0f2788',
+          type: 'movie',
+        }
+      });
+
+      setMovieData(response.data)
+      setIsMovieSelected(true);
+    } catch (error) {
+      console.error('error')
+    }
+  }
+
+  const resultHandler = (imdbID) => {
+    getFetchData(imdbID);
+  };
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://www.omdbapi.com/', {
-          params: {
-            i: 'tt3896198',
-            apikey: '7e0f2788',
-            type: 'movie',
-          }
-        });
-
-        setMovieData(response.data)
-
-      } catch (error) {
-        console.error('error')
-      }
-    }
-    fetchData();
-  }, []);
+    getFetchData('tt3896198');
+  }, [])
 
   const [searchData, setSearchData] = useState('')
   const [searchResult, setSearchResult] = useState(null)
@@ -41,6 +48,7 @@ function App() {
         }
       });
       setSearchResult(searchResponse.data);
+      setIsMovieSelected(false);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -53,13 +61,13 @@ function App() {
   };
 
   function SearchResults({ results }) {
-    if(results) {
+    if (results && !isMovieSelected) {
       if (results.Response == "True") {
         const data = results.Search
         return (
-          <ul className="bg-gray-800 absolute w-2/3 md:w-1/4 rounded-lg overflow-auto z-10 top-60">
+          <ul className="bg-gray-800 absolute w-2/3 md:w-1/4 rounded-lg overflow-auto z-10 top-60 max-h-60">
             {data.map((result) => (
-              <li key={result.imdbID} className="p-2 border border-gray-900 cursor-pointer">
+              <li key={result.imdbID} className="p-2 border border-gray-900 cursor-pointer" onClick={() => resultHandler(result.imdbID)}>
                 <div className="flex items-center px-4 gap-4 content-center">
                   <div className="flex-shrink-0">
                     <img className="w-8 h-8 rounded-lg" src={result.Poster} alt={`${result.Title} Poster`} />
@@ -73,13 +81,13 @@ function App() {
             ))}
           </ul>
         );
-    } else {
-      console.log('hi');
-    }
+      } else {
+        console.log('hi');
+      }
     } else {
       return null;
     }
-    
+
   }
 
   return (
