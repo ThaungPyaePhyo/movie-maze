@@ -65,7 +65,7 @@ function App() {
       if (results.Response == "True") {
         const data = results.Search
         return (
-          <ul className="bg-gray-800 absolute w-2/3 md:w-1/4 rounded-lg overflow-auto z-10 top-60 max-h-60">
+          <ul className="bg-gray-800 absolute w-2/3 md:w-1/4 rounded-lg overflow-auto z-10 top-60">
             {data.map((result) => (
               <li key={result.imdbID} className="p-2 border border-gray-900 cursor-pointer" onClick={() => resultHandler(result.imdbID)}>
                 <div className="flex items-center px-4 gap-4 content-center">
