@@ -65,7 +65,7 @@ function App() {
                     <img className="w-8 h-8 rounded-lg" src={result.Poster} alt={`${result.Title} Poster`} />
                   </div>
                   <div className="flex-1 min-w-0 content-center items-center text-white">
-                    <p className="text-sm">{result.Title}</p>
+                    <p className="text-lg font-bold">{result.Title}</p>
                     <p className="text-sm">{result.Year}</p>
                   </div>
                 </div>
