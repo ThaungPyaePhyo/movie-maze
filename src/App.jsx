@@ -65,7 +65,7 @@ function App() {
       if (results.Response == "True") {
         const data = results.Search
         return (
-          <ul className="bg-gray-800 absolute w-2/3 md:w-1/4 rounded-lg overflow-auto z-10 top-60">
+          <ul className="bg-gray-800 absolute w-4/5 md:w-2/3 lg:w-1/4 rounded-lg overflow-auto z-10 top-60">
             {data.map((result) => (
               <li key={result.imdbID} className="p-2 border border-gray-900 cursor-pointer" onClick={() => resultHandler(result.imdbID)}>
                 <div className="flex items-center px-4 gap-4 content-center">
@@ -94,31 +94,36 @@ function App() {
     <>
       <div className='container-2xl'>
         <nav className=' h-20 flex items-center p-5 md:mx-40'>
-          <h1 className='text-yellow-500 font-serif font-bold md:text-4xl sm:text-2x text-lg'>MOVIE MAZE</h1>
+          <h1 className="text-yellow-500 font-serif font-bold text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">MOVIE MAZE</h1>
 
         </nav>
         <div className="flex justify-center items-center bg-gray-800 py-8 px-2 md:p-16 m-4">
-          <input type="text" className="bg-white h-14 w-2/3 md:w-1/4 px-12 rounded-lg" name="" onChange={search} />
+          <input
+            type="text"
+            className="bg-white h-14 w-4/5 md:w-1/2 xl:w-1/3 px-12 rounded-lg"
+            placeholder="Type your response here..."
+            onChange={search}
+          />
         </div>
         <div className='flex justify-center items-center'>
           <SearchResults results={searchResult} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-4 md:mx-48 md:px-48 my-16 md:my-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-4 lg:mx-0 2xl:mx-40 2xl:px-40 my-16 xl:my-20">
           <div className='md:mb-0 mb-12'>
             <img src={movieData?.Poster} alt="" className='rounded-lg object-cover' />
           </div>
-          <div className='text-white grid gap-3 md:gap-6'>
-            <h1 className='text-lg sm:text-2xl md:text-4xl text-yellow-500 font-bold'>{movieData?.Title}</h1>
-            <h3 className='text-sm sm:text-md md:text-lg font-bold'>
-              Year: {movieData?.Year ?? 'N/A'},
-              <span className='bg-yellow-500 text-white p-1 rounded'>Rating: {movieData?.Rated},</span>
+          <div className='text-white grid gap-3 md:gap-6 sm:mx-40 md:mx-0 my-2'>
+            <h1 className='text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-yellow-500 font-bold'>{movieData?.Title}</h1>
+            <h3 className='text-sm sm:text-md md:text-md font-bold'>
+              Year: {movieData?.Year ?? 'N/A'},&nbsp;&nbsp;
+              <span className='bg-yellow-500 text-white p-1 rounded'>Rating: {movieData?.Rated},</span>&nbsp;&nbsp;
               Released: {movieData?.Released}
             </h3>
-            <h2><span className='bg-gray-700 text-white font-bold md:text-lg text-sm sm:text-md p-1 rounded'>Genre:{movieData?.Genre}</span></h2>
-            <h2 className='text-white font-bold md:text-lg text-sm sm:text-md'><b>Writer:</b>{movieData?.Writer}</h2>
-            <h2 className='text-white font-bold md:text-lg text-sm sm:text-md'><b>Actors:</b>{movieData?.Actors}</h2>
-            <h2 className='text-white font-bold md:text-lg text-sm sm:text-md'><b>Plot:</b>{movieData?.Plot}</h2>
-            <h2 className='text-yellow-500 md:text-lg text-sm sm:text-md'><b>Language:</b>{movieData?.Language}</h2>
+            <h2><span className='bg-gray-700 text-white md:text-lg text-sm sm:text-md p-1 rounded'><b>Genre:</b>&nbsp;&nbsp;{movieData?.Genre}</span></h2>
+            <h2 className='text-white md:text-lg text-sm sm:text-md'><b>Writer:</b>&nbsp;&nbsp;{movieData?.Writer}</h2>
+            <h2 className='text-white md:text-lg text-sm sm:text-md'><b>Actors:</b>&nbsp;&nbsp;{movieData?.Actors}</h2>
+            <h2 className='text-white md:text-lg text-sm sm:text-md'><b>Plot:</b>&nbsp;&nbsp;{movieData?.Plot}</h2>
+            <h2 className='text-yellow-500 md:text-lg text-sm sm:text-md'><b>Language:</b>&nbsp;&nbsp;{movieData?.Language}</h2>
             <p className='text-sm sm:text-md md:text-lg'>{movieData?.Awards}</p>
           </div>
         </div>
