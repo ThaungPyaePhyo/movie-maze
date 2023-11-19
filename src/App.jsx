@@ -40,7 +40,7 @@ function App() {
   const [searchResult, setSearchResult] = useState(null)
   const fetchData = async (newSearchData) => {
     try {
-      const searchResponse = await axios.get('http://www.omdbapi.com/', {
+      const searchResponse = await axios.get('https://www.omdbapi.com/', {
         params: {
           apikey: '7e0f2788',
           type: 'movie',
@@ -82,7 +82,7 @@ function App() {
           </ul>
         );
       } else {
-        
+
       }
     } else {
       return null;
