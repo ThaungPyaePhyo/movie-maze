@@ -1,21 +1,23 @@
-import { useState } from 'react'
-import './App.css'
-import { useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import './App.css';
 
 function App() {
-
   const [movieData, setMovieData] = useState(null);
   const [isMovieSelected, setIsMovieSelected] = useState(false);
 
+  const apiUrl = 'https://www.omdbapi.com/';
+  const apiKey = '7e0f2788';
+
   const getFetchData = async (imdbID) => {
     try {
-      const response = await axios.get('https://www.omdbapi.com/', {
+      const response = await axios.get(apiUrl, {
         params: {
           i: imdbID,
-          apikey: '7e0f2788',
+          apikey: apiKey,
           type: 'movie',
         }
       });
@@ -23,7 +25,7 @@ function App() {
       setMovieData(response.data)
       setIsMovieSelected(true);
     } catch (error) {
-      console.error('error')
+      console.error('Error fetching data:', error);
     }
   }
 
@@ -31,18 +33,18 @@ function App() {
     getFetchData(imdbID);
   };
 
-
   useEffect(() => {
     getFetchData('tt3896198');
-  }, [])
+  }, []);
 
-  const [searchData, setSearchData] = useState('')
-  const [searchResult, setSearchResult] = useState(null)
+  const [searchData, setSearchData] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
+
   const fetchData = async (newSearchData) => {
     try {
-      const searchResponse = await axios.get('https://www.omdbapi.com/', {
+      const searchResponse = await axios.get(apiUrl, {
         params: {
-          apikey: '7e0f2788',
+          apikey: apiKey,
           type: 'movie',
           s: newSearchData
         }
@@ -62,8 +64,8 @@ function App() {
 
   function SearchResults({ results }) {
     if (results && !isMovieSelected) {
-      if (results.Response == "True") {
-        const data = results.Search
+      if (results.Response === "True") {
+        const data = results.Search;
         return (
           <ul className="bg-gray-800 absolute w-4/5 md:w-2/3 lg:w-1/4 rounded-lg overflow-auto z-10 top-60">
             {data.map((result) => (
@@ -82,20 +84,22 @@ function App() {
           </ul>
         );
       } else {
-
+        return <p>No results found.</p>;
       }
     } else {
       return null;
     }
-
   }
+
+  SearchResults.propTypes = {
+    results: PropTypes.object,
+  };
 
   return (
     <>
       <div className='container-2xl'>
-        <nav className=' h-20 flex items-center p-5 md:mx-40'>
+        <nav className='h-20 flex items-center p-5 md:mx-40'>
           <h1 className="text-yellow-500 font-serif font-bold text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">MOVIE MAZE</h1>
-
         </nav>
         <div className="flex justify-center items-center bg-gray-800 py-8 px-2 md:p-16 m-4">
           <input
@@ -110,7 +114,7 @@ function App() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center mx-4 lg:mx-0 2xl:mx-40 2xl:px-40 my-16 xl:my-20">
           <div className='md:mb-0 mb-12'>
-            <img src={movieData?.Poster} alt="" className='rounded-lg object-cover' />
+            <img src={movieData?.Poster} alt={`${movieData?.Title} Poster`} className='rounded-lg object-cover' />
           </div>
           <div className='text-white grid gap-3 md:gap-6 sm:mx-40 md:mx-0 my-2'>
             <h1 className='text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-yellow-500 font-bold'>{movieData?.Title}</h1>
@@ -129,7 +133,7 @@ function App() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
