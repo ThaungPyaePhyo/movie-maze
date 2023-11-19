@@ -12,7 +12,7 @@ function App() {
 
   const getFetchData = async (imdbID) => {
     try {
-      const response = await axios.get('http://www.omdbapi.com/', {
+      const response = await axios.get('https://www.omdbapi.com/', {
         params: {
           i: imdbID,
           apikey: '7e0f2788',
