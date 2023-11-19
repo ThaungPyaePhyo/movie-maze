@@ -82,7 +82,7 @@ function App() {
           </ul>
         );
       } else {
-        console.log('hi');
+        
       }
     } else {
       return null;
